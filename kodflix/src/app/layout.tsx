@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import NavbarWrapper from "@/components/NavbarWrapper";
 import { HeroProvider } from "@/context/HeroContext";
+import AuthGuard from "@/components/AuthGuard";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,14 +20,16 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <body className={`${inter.className} min-h-screen bg-[#141414]`}>
-        <HeroProvider>
-          {/* Hidden Google Translate container */}
-          <div id="google_translate_element" style={{ display: 'none' }}></div>
-          <NavbarWrapper />
-          <main className="relative min-h-screen overflow-x-hidden">
-            {children}
-          </main>
-        </HeroProvider>
+        <AuthGuard>
+          <HeroProvider>
+            {/* Hidden Google Translate container */}
+            <div id="google_translate_element" style={{ display: 'none' }}></div>
+            <NavbarWrapper />
+            <main className="relative min-h-screen overflow-x-hidden">
+              {children}
+            </main>
+          </HeroProvider>
+        </AuthGuard>
 
         {/* Google Translate Script */}
         <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" async></script>
