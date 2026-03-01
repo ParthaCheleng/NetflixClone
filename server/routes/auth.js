@@ -8,7 +8,10 @@ const router = express.Router();
 // POST /register
 router.post('/register', async (req, res) => {
     try {
-        const { username, email, phone, password } = req.body;
+        const username = req.body.username?.trim();
+        const email = req.body.email?.trim();
+        const phone = req.body.phone?.trim();
+        const password = req.body.password;
 
         // Validate required fields
         if (!username || !email || !password) {
@@ -45,10 +48,12 @@ router.post('/register', async (req, res) => {
 // POST /login
 router.post('/login', async (req, res) => {
     try {
-        const { username, email, password } = req.body;
+        const username = req.body.username?.trim();
+        const email = req.body.email?.trim();
+        const password = req.body.password;
 
         // Using either username or email as login identifier
-        const identifier = username || email;
+        const identifier = (username || email || '').trim();
 
         if (!identifier || !password) {
             return res.status(400).json({ error: 'Username/email and password are required' });
